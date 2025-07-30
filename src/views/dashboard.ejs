@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><title>Dashboard</title></head>
+<body>
+  <h1>Welcome, <%= merchant.name %></h1>
+  <p>API Key: <code><%= merchant.apiKey %></code></p>
+  <form method="post" action="/dashboard/xpub">
+    <label>Extended Public Key (XPUB):</label>
+    <input type="text" name="xpub" value="<%= merchant.xpub || '' %>" required/>
+    <button type="submit">Save</button>
+  </form>
+
+  <h2>Invoices</h2>
+  <table border="1" cellpadding="4">
+    <tr><th>ID</th><th>Qty</th><th>Amount</th><th>Address</th><th>Status</th><th>Action</th></tr>
+    <% invoices.forEach(inv => { %>
+      <tr>
+        <td><%= inv.id %></td>
+        <td><%= inv.quantity %></td>
+        <td><%= inv.amount %></td>
+        <td><%= inv.address %></td>
+        <td><%= inv.status %></td>
+        <td><a href="/embed/<%= inv.id %>" target="_blank">View</a></td>
+      </tr>
+    <% }) %>
+  </table>
+
+  <form method="post" action="/logout"><button type="submit">Logout</button></form>
+</body>
+</html>
